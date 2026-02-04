@@ -1,0 +1,168 @@
+/* ===== BUTTONS STYLE ===== */
+button {
+  position: absolute;          /* float above the renderer */
+  top: 15px;                   /* distance from top */
+  padding: 10px 20px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0,255,255,0.3);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  z-index: 1000;               /* above the renderer */
+}
+
+button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 35px rgba(0,255,255,0.6);
+  background: rgba(255,255,255,0.15);
+}
+
+/* Individual button positions */
+#logout {
+  right: 15px;
+  top: 15px;
+  background: rgba(255,50,50,0.2);
+  border: 1px solid rgba(255,50,50,0.4);
+  box-shadow: 0 0 20px rgba(255,50,50,0.5);
+}
+#logout:hover {
+  background: rgba(255,50,50,0.35);
+  box-shadow: 0 0 40px rgba(255,50,50,0.8);
+}
+
+#table  { left: 15px; }
+#sphere { left: 130px; }
+#helix  { left: 245px; }
+#grid   { left: 360px; }
+
+/* ===== NET WORTH LEGEND BAR ===== */
+#networth-legend {
+  position: absolute;
+  left: 15px;
+  top: 100px;
+  width: 160px;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 25px rgba(0,255,255,0.3);
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  z-index: 1000; /* above renderer */
+}
+
+#networth-legend h3 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  text-align: center;
+  background: linear-gradient(90deg, #00ffe0, #00c3ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.legend-item .color {
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  margin-right: 10px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.legend-item .color.red    { background: red; }
+.legend-item .color.orange { background: orange; }
+.legend-item .color.green  { background: green; }
+
+
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
+  color: white;
+}
+
+/* ===== LOGIN PAGE ===== */
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.login-box {
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.08);
+  padding: 50px 60px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  animation: float 6s ease-in-out infinite;
+}
+
+.login-box h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #00ffe0, #00c3ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-box p {
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+
+/* Floating animation */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+/* ===== VISUALIZER CARDS ===== */
+.element {
+  width: 130px;
+  height: 170px;
+  text-align: center;
+  border-radius: 15px;
+  color: white;
+  padding: 8px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(0,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.element:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(0,255,255,0.7);
+}
+
+.element img {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+  border: 2px solid rgba(255,255,255,0.4);
+}
+
+
+#logout { right: 15px; background: rgba(255,50,50,0.2); }
+#table { left: 15px; }
+#sphere { left: 110px; }
+#helix { left: 205px; }
+#grid { left: 300px; }

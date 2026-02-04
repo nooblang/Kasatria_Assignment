@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3D Net Worth Visualizer</title>
+<link rel="stylesheet" href="styles.css">
+
+<!-- Google Sign-In -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<!-- Three.js + CSS3DRenderer + TrackballControls -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS3DRenderer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TrackballControls.js"></script>
+
+<!-- Tween.js -->
+<script src="https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.6.4/dist/tween.umd.js"></script>
+
+
+</head>
+
+<body>
+
+<button id="logout">Logout</button>
+<button id="table">Table</button>
+<button id="sphere">Sphere</button>
+<button id="helix">Helix</button>
+<button id="grid">Grid</button>
+<div id="networth-legend">
+  <h3>Net Worth</h3>
+  <div class="legend-item">
+    <span class="color red"></span>
+    <span>Less than $100K</span>
+  </div>
+  <div class="legend-item">
+    <span class="color orange"></span>
+    <span>$100K - $200K</span>
+  </div>
+  <div class="legend-item">
+    <span class="color green"></span>
+    <span>Above $200K</span>
+  </div>
+</div>
+
+<script src="app.js"></script>
+
+
+
+</body>
+</html>
