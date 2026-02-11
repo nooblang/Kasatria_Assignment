@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // --------------------------
   let camera, scene, renderer, controls;
   let objects = [];
-  let targets = { table: [], sphere: [], helix: [], grid: [] };
-  let currentLayout = "table"; // Track current layout
+  let targets = { table: [], sphere: [], helix: [], grid: [], pyramid: [] };
+  let currentLayout = "table";
 
   // --------------------------
   // BUILD SCENE
@@ -105,12 +105,41 @@ document.addEventListener("DOMContentLoaded", () => {
   // CREATE LAYOUTS
   // --------------------------
   function createLayouts() {
-    targets = { table: [], sphere: [], helix: [], grid: [] };
+    targets = { table: [], sphere: [], helix: [], grid: [], pyramid: [] };
     const vector = new THREE.Vector3();
+// ---------- PYRAMID (TRUE 3D STEPPED PYRAMID) ----------
+let itemIndex = 0;
+const baseSpacing = 180;
+const heightSpacing = 200;
+let level = 0;
+
+while (itemIndex < objects.length) {
+  const side = level + 1;          
+  const capacity = side * side;
+
+  for (let i = 0; i < capacity && itemIndex < objects.length; i++) {
+    const row = Math.floor(i / side);
+    const col = i % side;
+
+    const pyramid = new THREE.Object3D();
+
+    pyramid.position.set(
+      (col - (side - 1) / 2) * baseSpacing,
+      level * heightSpacing * -1,   
+      (row - (side - 1) / 2) * baseSpacing
+    );
+
+    targets.pyramid.push(pyramid);
+    itemIndex++;
+  }
+
+  level++;
+}
+
 
     for (let i = 0; i < objects.length; i++) {
 
-      // ---------- TABLE (20x10) ----------
+      // ---------- TABLE ----------
       const table = new THREE.Object3D();
       table.position.set(
         (i % 20) * 140 - 1400,
@@ -119,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       targets.table.push(table);
 
-      // ---------- SPHERE (ONLY THIS ROTATES) ----------
+      // ---------- SPHERE ----------
       const sphere = new THREE.Object3D();
       const phi = Math.acos(-1 + (2 * i) / objects.length);
       const theta = Math.sqrt(objects.length * Math.PI) * phi;
@@ -132,20 +161,18 @@ document.addEventListener("DOMContentLoaded", () => {
       // ---------- DOUBLE HELIX ----------
       const helix = new THREE.Object3D();
       const strand = i % 2;
-      const index = Math.floor(i / 2);
-
-      const angle = index * 0.35 + strand * Math.PI;
+      const index2 = Math.floor(i / 2);
+      const angle = index2 * 0.35 + strand * Math.PI;
       const radius = 600;
 
       helix.position.set(
         radius * Math.cos(angle),
-        -index * 40 + 1000,
+        -index2 * 40 + 1000,
         radius * Math.sin(angle)
       );
-
       targets.helix.push(helix);
 
-      // ---------- GRID (5x4x10) ----------
+      // ---------- GRID ----------
       const grid = new THREE.Object3D();
       grid.position.set(
         (i % 5) * 400 - 800,
@@ -163,7 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
     objects.forEach((obj, i) => {
       const target = targetsArr[i];
 
-      // position tween
       new TWEEN.Tween(obj.position)
         .to(
           {
@@ -176,7 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .easing(TWEEN.Easing.Exponential.InOut)
         .start();
 
-      // rotation tween only for sphere
       if (rotate) {
         new TWEEN.Tween(obj.rotation)
           .to(
@@ -190,7 +215,6 @@ document.addEventListener("DOMContentLoaded", () => {
           .easing(TWEEN.Easing.Exponential.InOut)
           .start();
       } else if (currentLayout !== "helix") {
-        // Reset rotation for Table/Grid
         new TWEEN.Tween(obj.rotation)
           .to({ x: 0, y: 0, z: 0 }, 1000)
           .easing(TWEEN.Easing.Exponential.InOut)
@@ -204,15 +228,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // --------------------------
   function animate() {
     requestAnimationFrame(animate);
-
     TWEEN.update();
     controls.update();
 
-    // Make double helix tiles face camera dynamically
     if (currentLayout === "helix") {
-      for (let i = 0; i < objects.length; i++) {
-        objects[i].lookAt(camera.position);
-      }
+      objects.forEach(obj => obj.lookAt(camera.position));
     }
 
     renderer.render(scene, camera);
@@ -241,8 +261,13 @@ document.addEventListener("DOMContentLoaded", () => {
     transform(targets.grid, false);
   };
 
+  document.getElementById("pyramid").onclick = () => {
+    currentLayout = "pyramid";
+    transform(targets.pyramid, false);
+  };
+
   // --------------------------
-  // RESIZE HANDLER
+  // RESIZE
   // --------------------------
   window.addEventListener("resize", () => {
     if (!camera || !renderer) return;
